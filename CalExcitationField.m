@@ -29,6 +29,7 @@ v=zeros(2*zSize+1,2*rSize+1);
 
 
 %%
+%incident field case 
 if reflect==0
     for i=(1:(2*zSize+1))
         for j=1:(2*rSize+1)
@@ -45,15 +46,19 @@ if reflect==0
         end;
     end;
 end
+%reflection field case
 if reflect==1
     for i=(1:(2*zSize+1))
         for j=1:(2*rSize+1)
+            %calculate the mirror coordination
             zz=(tan(thetaMirror).^2-1)/(1+tan(thetaMirror).^2).*zCord(i)+(-tan(thetaMirror)*2)/(1+tan(thetaMirror).^2).*rCord(j)+(2)/(1+tan(thetaMirror).^2).*zMirrorLambda1;
             rr=(-tan(thetaMirror)*2)/(1+tan(thetaMirror).^2).*zCord(i)-(tan(thetaMirror).^2-1)/(1+tan(thetaMirror).^2).*rCord(j)+(2*tan(thetaMirror))/(1+tan(thetaMirror).^2).*zMirrorLambda1;
          u(i,j)=4*k*zz*lambda1*(sin(alpha/2)^2);
          v(i,j)=k*rr*lambda1*sin(alpha);    
         end;
     end;
+    %calculate the depletion field mutiplied by a phase shift,given by
+    %Fresnil equation
     for i=1:(2*zSize+1)
         for j=1:(2*rSize+1)
         Koi = -2*pi*1i/(lambda1)*exp(1i*u(i,j)/(4*(sin(alpha/2)^2)));
